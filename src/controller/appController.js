@@ -14,8 +14,12 @@ let elgamalEncrypt = async (
   privateKey,
   string
 ) => {
-  const eg = new ElGamal(prime, generator, publicKey, privateKey);
-  return eg.encryptAsync(string);
+  try {
+    const eg = new ElGamal(prime, generator, publicKey, privateKey);
+    return eg.encryptAsync(string);
+  } catch (error) {
+    return res.redirect("/");
+  }
 };
 let elgamalDecrypt = async (
   prime,
@@ -24,8 +28,12 @@ let elgamalDecrypt = async (
   privateKey,
   string
 ) => {
-  const eg = new ElGamal(prime, generator, publicKey, privateKey);
-  return eg.decryptAsync(string).toString();
+  try {
+    const eg = new ElGamal(prime, generator, publicKey, privateKey);
+    return eg.decryptAsync(string).toString();
+  } catch (error) {
+    return res.redirect("/");
+  }
 };
 export default {
   getHomePage,
