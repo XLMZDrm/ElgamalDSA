@@ -2,6 +2,7 @@ import express from "express";
 import configViewEngine from "./configs/viewEngine";
 import initWebRoute from "./route/web";
 
+const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
