@@ -1,4 +1,8 @@
 import ElGamal from "elgamal";
+import multer from "multer";
+const crypto = require("crypto");
+const fs = require("fs");
+var appRoot = require("app-root-path");
 let getHomePage = (req, res) => {
   try {
     return res.render("home");
@@ -7,54 +11,34 @@ let getHomePage = (req, res) => {
     return res.redirect("/");
   }
 };
-let elgamalEncrypt = async (
-  prime,
-  generator,
-  publicKey,
-  privateKey,
-  string
-) => {
+const upload = multer().single("file_sign");
+
+let getSign = async (req, res) => {
   try {
-    const eg = new ElGamal(prime, generator, publicKey, privateKey);
-    return eg.encryptAsync(string).toString();
+    upload(req, res, function (err) {
+      // if (req.fileValidationError) {
+      //   console.log(req.fileValidationError);
+      // } else if (!req.file) {
+      //   console.log("Please select an image to upload");
+      // } else if (err instanceof multer.MulterError) {
+      //   console.log(err);
+      // } else if (err) {
+      //   console.log(err);
+      // }
+      const fileBuffer = fs.readFileSync(
+        appRoot + "/src/public/files/" + req.file.filename
+      );
+      const hashSum = crypto.createHash("sha256");
+      hashSum.update(fileBuffer);
+      const hex = hashSum.digest("hex");
+      console.log(hex);
+    });
   } catch (error) {
     console.log(error);
-  }
-};
-let elgamalDecrypt = async (
-  prime,
-  generator,
-  publicKey,
-  privateKey,
-  string
-) => {
-  try {
-    const eg = new ElGamal(prime, generator, publicKey, privateKey);
-    return eg.decryptAsync(string).toString();
-  } catch (error) {
-    console.log(error);
-  }
-};
-let elgamalEncryptAuto = async (string) => {
-  try {
-    const eg = await ElGamal.generateAsync();
-    return eg.encryptAsync(string).toString();
-  } catch (error) {
-    console.log(error);
-  }
-};
-let elgamalDecryptAuto = async (string) => {
-  try {
-    const eg = await ElGamal.generateAsync();
-    return eg.decryptAsync(string).toString();
-  } catch (error) {
-    console.log(error);
+    return res.redirect("/bug");
   }
 };
 export default {
   getHomePage,
-  elgamalEncrypt,
-  elgamalDecrypt,
-  elgamalEncryptAuto,
-  elgamalDecryptAuto,
+  getSign,
 };
