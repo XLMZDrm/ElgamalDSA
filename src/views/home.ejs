@@ -9,11 +9,39 @@
 </head>
 
 <body>
+    <h3>Message: <%= message.mess %>
+    </h3>
+    <h4>Ký văn bản</h4>
     <form action="/sign" method="post" enctype="multipart/form-data">
-        <label for=""></label>
-        <input type="file" name="file_sign">
-
-        <input type="submit" value="Submit">
+        <label for="p">Số nguyên tố p</label>
+        <input type="text" name="p" required placeholder="<%= signature.p%>"><br>
+        <label for="g">Alpha</label>
+        <input type="text" name="g" required placeholder="<%= signature.g%>"><br>
+        <label for=" x">Khóa bí mật(x)</label>
+        <input type="text" name="x" required placeholder="<%= signature.x%>"><br>
+        <label for=" y">Khóa công khai(y)</label>
+        <input type="text" name="y" required placeholder="<%= signature.y%>"><br>
+        <label for=" sing">Chữ ký</label>
+        <input type="text" name="sign" value="<%= signature.sign %>"><br>
+        <label for="file_sign">Tải file lên</label>
+        <input type="file" name="file_sign"><br>
+        <input type="submit" value="Ký">
+    </form>
+    <h4>Xác thực chữ ký</h4>
+    <form action="/verify" method="post" enctype="multipart/form-data">
+        <label for="p">Số nguyên tố p</label>
+        <input type="text" name="p"><br>
+        <label for="g">Alpha</label>
+        <input type="text" name="g"><br>
+        <label for="x">Khóa bí mật(x)</label>
+        <input type="text" name="x"><br>
+        <label for="y">Khóa công khai(y)</label>
+        <input type="text" name="y"><br>
+        <label for="sing">Chữ ký</label>
+        <input type="text" name="sign"><br>
+        <label for="file_sign">Tải file lên</label>
+        <input type="file" name="file_sign"><br>
+        <input type="submit" value="Xác thực">
     </form>
 </body>
 

@@ -13,10 +13,13 @@
     "@babel/core": "^7.18.2",
     "@babel/node": "^7.17.10",
     "@babel/preset-env": "^7.18.2",
+    "@babel/runtime": "^7.18.3",
     "app-root-path": "^3.0.0",
+    "bluebird": "^3.7.2",
     "ejs": "^3.1.8",
-    "elgamal": "^0.3.0",
+    "es6-error": "^4.1.1",
     "express": "^4.18.1",
+    "jsbn": "^1.1.0",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^2.0.16"
   }
