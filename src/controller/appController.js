@@ -41,7 +41,7 @@ let getSign = async (req, res) => {
         appRoot + "/src/public/files/" + req.file.filename + ".key",
         JSON.stringify(enHex)
       );
-      signature.sign = fullUrl + "files/" + req.file.filename + ".key";
+      signature.sign = "/files/" + req.file.filename + ".key";
       message.mess = "Ký thành công. Bấm nút download để tải file chữ ký.";
       fs.unlinkSync(appRoot + "/src/public/files/" + req.file.filename);
       return res.render("home", { message: message, signature: signature });
