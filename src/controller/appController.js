@@ -1,10 +1,6 @@
-import full from "@babel/core/lib/config/full";
-import multer from "multer";
 import ElGamal from "../models/index";
 import path from "path";
-// import { BigInteger } from "jsbn";
-import EncryptedValue from "../models/encrypted-value";
-import { BigInteger } from "jsbn";
+
 var mess = "";
 var message = { mess: mess };
 var sign = "";
@@ -49,7 +45,6 @@ let getSign = async (req, res) => {
     hashSum.update(fileBuffer);
     const hex = hashSum.digest("hex");
     const enHex = await eg.encryptAsync(hex, 0);
-    // console.log(enHex);
     fs.appendFileSync(
       appRoot + "/src/public/files/" + req.file.filename + ".key",
       JSON.stringify(enHex)
@@ -60,7 +55,7 @@ let getSign = async (req, res) => {
     return res.render("home", { message: message, signature: signature });
   } catch (error) {
     console.log(error);
-    return res.redirect("/bug");
+    return res.redirect("/");
   }
 };
 let getVerify = async (req, res) => {

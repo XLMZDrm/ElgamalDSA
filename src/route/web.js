@@ -1,5 +1,4 @@
 import express from "express";
-import { route } from "express/lib/application";
 import appController from "../controller/appController";
 import multer from "multer";
 import path from "path";
