@@ -41,8 +41,8 @@ let getSign = async (req, res) => {
       );
       signature.sign =
         "<a href=" +
-        appRoot +
-        "/src/public/files" +
+        window.location.href +
+        "files/" +
         req.file.filename +
         ".key" +
         ">Download</a><br>";
