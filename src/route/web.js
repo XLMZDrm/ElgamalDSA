@@ -27,6 +27,7 @@ const initWebRoute = (app) => {
     upload.array("files_sign", 2),
     appController.getVerify
   );
+  router.get("/clear", appController.clearCache);
   return app.use("/", router);
 };
 export default initWebRoute;

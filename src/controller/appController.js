@@ -105,8 +105,13 @@ let getVerify = async (req, res) => {
     return res.redirect("/bug");
   }
 };
+let clearCache = (req, res) => {
+  fse.emptyDirSync(appRoot + "/src/public/files/");
+  return res.redirect("/");
+};
 export default {
   getHomePage,
   getSign,
   getVerify,
+  clearCache,
 };
