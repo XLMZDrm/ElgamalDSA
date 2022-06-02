@@ -1,6 +1,6 @@
 import ElGamal from "../models/index";
 import path from "path";
-
+import fse from "fs-extra";
 var mess = "";
 var message = { mess: mess };
 var sign = "";
@@ -15,6 +15,7 @@ var appRoot = require("app-root-path");
 let getHomePage = (req, res) => {
   try {
     message.mess = "WELCOME BRO";
+    fse.emptyDirSync(appRoot + "/src/public/files/");
     return res.render("home", { message: message, signature: signature });
   } catch (error) {
     console.log(error);
