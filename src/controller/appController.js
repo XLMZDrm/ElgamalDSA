@@ -35,8 +35,19 @@ let getSign = async (req, res) => {
       hashSum.update(fileBuffer);
       const hex = hashSum.digest("hex");
       const enHex = await eg.encryptAsync(hex);
-      signature.sign = JSON.stringify(enHex);
-      message.mess = "Ký thành công.";
+      fs.appendFileSync(
+        appRoot + "/src/public/files/" + req.file.filename + ".key",
+        JSON.stringify(enHex)
+      );
+      signature.sign =
+        "<a href=" +
+        appRoot +
+        "/src/public/files" +
+        req.file.filename +
+        ".key" +
+        ">Download</a><br>";
+      message.mess = "Ký thành công. Bấm nút download để tải file chữ ký.";
+      fs.unlinkSync(appRoot + "/src/public/files/" + req.file.filename);
       return res.render("home", { message: message, signature: signature });
     });
   } catch (error) {
@@ -51,6 +62,7 @@ let getVerify = async (req, res) => {
     x = req.body.x;
     y = req.body.y;
     sign = req.body.sign;
+    console.log(sign);
     upload(req, res, async function (err) {
       const eg = new ElGamal(p, g, y, x);
       const fileBuffer = fs.readFileSync(

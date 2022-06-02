@@ -139,5 +139,5 @@ export default class ElGamal {
       x: this.x,
     };
   }
-  async converChar(char) {}
+  // async converChar(char) {}
 }
