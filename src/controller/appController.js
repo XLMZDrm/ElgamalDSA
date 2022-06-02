@@ -18,6 +18,7 @@ const fs = require("fs");
 var appRoot = require("app-root-path");
 let getHomePage = (req, res) => {
   try {
+    message.mess = "WELCOME BRO";
     return res.render("home", { message: message, signature: signature });
   } catch (error) {
     console.log(error);
