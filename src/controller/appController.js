@@ -15,7 +15,6 @@ var appRoot = require("app-root-path");
 let getHomePage = (req, res) => {
   try {
     message.mess = "WELCOME BRO";
-    fse.emptyDirSync(appRoot + "/src/public/files/");
     return res.render("home", { message: message, signature: signature });
   } catch (error) {
     console.log(error);
@@ -52,7 +51,6 @@ let getSign = async (req, res) => {
     );
     signature.sign = "/files/" + req.file.filename + ".key";
     message.mess = "Ký thành công. Bấm nút download để tải file chữ ký.";
-    fs.unlinkSync(appRoot + "/src/public/files/" + req.file.filename);
     return res.render("home", { message: message, signature: signature });
   } catch (error) {
     console.log(error);
@@ -77,7 +75,6 @@ let getVerify = async (req, res) => {
           appRoot + "/src/public/files/" + file.filename
         );
         fileKey = JSON.parse(fileKey);
-        fs.unlinkSync(appRoot + "/src/public/files/" + file.filename);
       } else {
         const fileSign = fs.readFileSync(
           appRoot + "/src/public/files/" + file.filename
@@ -85,7 +82,6 @@ let getVerify = async (req, res) => {
         const hashSum = crypto.createHash("sha256");
         hashSum.update(fileSign);
         hex = hashSum.digest("hex");
-        fs.unlinkSync(appRoot + "/src/public/files/" + file.filename);
       }
     });
     enHex = await eg.encryptAsync(hex, 0);
@@ -96,7 +92,6 @@ let getVerify = async (req, res) => {
     fileReHex = fs.readFileSync(
       appRoot + "/src/public/files/" + files[0].filename + ".keys"
     );
-    fs.unlinkSync(appRoot + "/src/public/files/" + files[0].filename + ".keys");
     fileReHex = JSON.parse(fileReHex);
     if (compareJSON(fileKey, fileReHex)) {
       message.mess = "Đây là tài liệu chuẩn, không bị chỉnh sửa.";
