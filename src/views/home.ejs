@@ -17,8 +17,8 @@
         <input type="text" name="p" required placeholder="<%= signature.p%>"><br>
         <label for="g">Alpha</label>
         <input type="text" name="g" required placeholder="<%= signature.g%>"><br>
-        <label for=" x">Khóa bí mật(x)</label>
-        <input type="text" name="x" required placeholder="<%= signature.x%>"><br>
+        <!-- <label for=" x">Khóa bí mật(x)</label>
+        <input type="text" name="x" required placeholder="<%= signature.x%>"><br> -->
         <label for=" y">Khóa công khai(y)</label>
         <input type="text" name="y" required placeholder="<%= signature.y%>"><br>
         <label for=" sign">Chữ ký</label><br>
@@ -37,10 +37,8 @@
         <input type="text" name="x"><br>
         <label for="y">Khóa công khai(y)</label>
         <input type="text" name="y"><br>
-        <label for="sign">Chữ ký</label>
-        <input type="file" name="sign"><br>
-        <label for="file_sign">Tải file lên</label>
-        <input type="file" name="file_sign"><br>
+        <label for="files_sign">Tải file lên</label>
+        <input type="file" name="files_sign" multiple><br>
         <input type="submit" value="Xác thực">
     </form>
 </body>
