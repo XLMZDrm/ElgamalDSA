@@ -29,14 +29,14 @@ let getSign = async (req, res) => {
     upload(req, res, async function (err) {
       const eg = new ElGamal(p, g, y, x);
       const fileBuffer = fs.readFileSync(
-        appRoot + "/src/public/files/" + req.file.filename
+        window.location.href + "files/" + req.file.filename
       );
       const hashSum = crypto.createHash("sha256");
       hashSum.update(fileBuffer);
       const hex = hashSum.digest("hex");
       const enHex = await eg.encryptAsync(hex);
       fs.appendFileSync(
-        appRoot + "/src/public/files/" + req.file.filename + ".key",
+        window.location.href + "files/" + req.file.filename + ".key",
         JSON.stringify(enHex)
       );
       signature.sign =
@@ -47,7 +47,7 @@ let getSign = async (req, res) => {
         ".key" +
         ">Download</a><br>";
       message.mess = "Ký thành công. Bấm nút download để tải file chữ ký.";
-      fs.unlinkSync(appRoot + "/src/public/files/" + req.file.filename);
+      fs.unlinkSync(window.location.href + "files/" + req.file.filename);
       return res.render("home", { message: message, signature: signature });
     });
   } catch (error) {
