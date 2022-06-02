@@ -80,6 +80,7 @@ let getVerify = async (req, res) => {
           appRoot + "/src/public/files/" + file.filename
         );
         fileKey = JSON.parse(fileKey);
+        fs.unlinkSync(appRoot + "/src/public/files/" + file.filename);
       } else {
         const fileSign = fs.readFileSync(
           appRoot + "/src/public/files/" + file.filename
@@ -87,6 +88,7 @@ let getVerify = async (req, res) => {
         const hashSum = crypto.createHash("sha256");
         hashSum.update(fileSign);
         hex = hashSum.digest("hex");
+        fs.unlinkSync(appRoot + "/src/public/files/" + file.filename);
       }
     });
     enHex = await eg.encryptAsync(hex, 0);
@@ -97,6 +99,7 @@ let getVerify = async (req, res) => {
     fileReHex = fs.readFileSync(
       appRoot + "/src/public/files/" + files[0].filename + ".keys"
     );
+    fs.unlinkSync(appRoot + "/src/public/files/" + files[0].filename + ".keys");
     fileReHex = JSON.parse(fileReHex);
     if (compareJSON(fileKey, fileReHex)) {
       message.mess = "Đây là tài liệu chuẩn, không bị chỉnh sửa.";
