@@ -22,10 +22,10 @@
         <label for=" y">Khóa công khai(y)</label>
         <input type="text" name="y" required placeholder="<%= signature.y%>"><br>
         <label for=" sign">Chữ ký</label><br>
-        <%= signature.sign%>
-            <label for="file_sign">Tải file lên</label>
-            <input type="file" name="file_sign"><br>
-            <input type="submit" value="Ký">
+        <a href="<%=signature.sign%>">Download</a><br>
+        <label for=" file_sign">Tải file lên</label>
+        <input type="file" name="file_sign"><br>
+        <input type="submit" value="Ký">
     </form>
     <h4>Xác thực chữ ký</h4>
     <form action="/verify" method="post" enctype="multipart/form-data">

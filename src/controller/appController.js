@@ -1,3 +1,4 @@
+import full from "@babel/core/lib/config/full";
 import multer from "multer";
 import ElGamal from "../models/index";
 var mess = "";
@@ -27,27 +28,22 @@ let getSign = async (req, res) => {
     x = req.body.x;
     y = req.body.y;
     upload(req, res, async function (err) {
+      var fullUrl = req.protocol + "://" + req.get("host") + "/";
       const eg = new ElGamal(p, g, y, x);
       const fileBuffer = fs.readFileSync(
-        window.location.href + "files/" + req.file.filename
+        appRoot + "/src/public/files/" + req.file.filename
       );
       const hashSum = crypto.createHash("sha256");
       hashSum.update(fileBuffer);
       const hex = hashSum.digest("hex");
       const enHex = await eg.encryptAsync(hex);
       fs.appendFileSync(
-        window.location.href + "files/" + req.file.filename + ".key",
+        appRoot + "/src/public/files/" + req.file.filename + ".key",
         JSON.stringify(enHex)
       );
-      signature.sign =
-        "<a href=" +
-        window.location.href +
-        "files/" +
-        req.file.filename +
-        ".key" +
-        ">Download</a><br>";
+      signature.sign = fullUrl + "files/" + req.file.filename + ".key";
       message.mess = "Ký thành công. Bấm nút download để tải file chữ ký.";
-      fs.unlinkSync(window.location.href + "files/" + req.file.filename);
+      fs.unlinkSync(appRoot + "/src/public/files/" + req.file.filename);
       return res.render("home", { message: message, signature: signature });
     });
   } catch (error) {
