@@ -22,7 +22,7 @@
         <label for=" y">Khóa công khai(y)</label>
         <input type="text" name="y" required placeholder="<%= signature.y%>"><br>
         <label for=" sign">Chữ ký</label><br>
-        <a href="<%=signature.sign%>">Download</a><br>
+        <a href="<%=signature.sign%>" download="<%=signature.sign%>">Download</a><br>
         <label for=" file_sign">Tải file lên</label>
         <input type="file" name="file_sign"><br>
         <input type="submit" value="Ký">
