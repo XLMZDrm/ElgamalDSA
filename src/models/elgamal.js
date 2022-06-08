@@ -83,6 +83,25 @@ export default class ElGamal {
     this.x = Utils.parseBigInt(x);
   }
 
+  isOK() {
+    if (!this.p.isProbablePrime()) {
+      return false;
+    }
+    let q = this.p.shiftRight(1);
+    if ((this.g.modPowInt(2, this.p).equals(BigInt.ONE) ||
+      this.g.modPow(q, this.p).equals(BigInt.ONE) ||
+      this.p.subtract(BigInt.ONE).remainder(this.g).equals(BigInt.ZERO) ||
+      this.p.subtract(BigInt.ONE).remainder(this.g.modInverse(this.p)).equals(BigInt.ZERO))) {
+      return false;
+    }
+    if (!(this.y.equals(this.g.modPow(this.x, this.p)))) {
+      return false;
+    }
+    if (!(this.x.max(Utils.BIG_TWO) && this.x.min(this.p.subtract(BigInt.ONE)))) {
+      return false;
+    }
+    return true;
+  }
   /**
    * Encrypts a message.
    * @param {string|BigInt|number} m Piece of data to be encrypted, which must
@@ -92,19 +111,23 @@ export default class ElGamal {
    * @returns {EncryptedValue}
    */
   async encryptAsync(m, k) {
-    const tmpKey =
-      Utils.parseBigInt(k) ||
-      (await Utils.getRandomBigIntAsync(
-        BigInt.ONE,
-        this.p.subtract(BigInt.ONE)
-      ));
-    const mBi = new DecryptedValue(m).bi;
-    const p = this.p;
+    if (this.isOK()) {
+      const tmpKey =
+        Utils.parseBigInt(k) ||
+        (await Utils.getRandomBigIntAsync(
+          BigInt.ONE,
+          this.p.subtract(BigInt.ONE)
+        ));
+      const mBi = new DecryptedValue(m).bi;
+      const p = this.p;
 
-    const a = this.g.modPow(tmpKey, p);
-    const b = this.y.modPow(tmpKey, p).multiply(mBi).remainder(p);
+      const a = this.g.modPow(tmpKey, p);
+      const b = this.y.modPow(tmpKey, p).multiply(mBi).remainder(p);
 
-    return new EncryptedValue(a, b);
+      return new EncryptedValue(a, b);
+    } else {
+      return null;
+    }
   }
 
   /**
@@ -114,29 +137,33 @@ export default class ElGamal {
    * @returns {DecryptedValue}
    */
   async decryptAsync(m) {
-    // TODO: Use a custom error object
-    if (!this.x) throw new Errors.MissingPrivateKeyError();
+    if (this.isOK()) {
+      // TODO: Use a custom error object
+      if (!this.x) throw new Errors.MissingPrivateKeyError();
 
-    const p = this.p;
-    const r = await Utils.getRandomBigIntAsync(
-      Utils.BIG_TWO,
-      this.p.subtract(BigInt.ONE)
-    );
+      const p = this.p;
+      const r = await Utils.getRandomBigIntAsync(
+        Utils.BIG_TWO,
+        this.p.subtract(BigInt.ONE)
+      );
 
-    const aBlind = this.g.modPow(r, p).multiply(m.a).remainder(p);
-    const ax = aBlind.modPow(this.x, p);
+      const aBlind = this.g.modPow(r, p).multiply(m.a).remainder(p);
+      const ax = aBlind.modPow(this.x, p);
 
-    const plaintextBlind = ax.modInverse(p).multiply(m.b).remainder(p);
-    const plaintext = this.y.modPow(r, p).multiply(plaintextBlind).remainder(p);
+      const plaintextBlind = ax.modInverse(p).multiply(m.b).remainder(p);
+      const plaintext = this.y.modPow(r, p).multiply(plaintextBlind).remainder(p);
 
-    return new DecryptedValue(plaintext);
+      return new DecryptedValue(plaintext);
+    } else {
+      return null;
+    }
   }
   async getValues() {
     return {
-      p: this.p,
-      g: this.g,
-      y: this.y,
-      x: this.x,
+      p: this.p.toString(),
+      g: this.g.toString(),
+      y: this.y.toString(),
+      x: this.x.toString(),
     };
   }
   // async converChar(char) {}

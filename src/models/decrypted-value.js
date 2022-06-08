@@ -14,7 +14,7 @@ export default class DecryptedValue {
   constructor(m) {
     switch (typeof m) {
       case 'string':
-        this.bi = new BigInt(new Buffer(m).toString('hex'), 16);
+        this.bi = new BigInt(new Buffer.from(m).toString('hex'), 16);
         break;
       case 'number':
         this.bi = new BigInt(`${m}`);
@@ -25,6 +25,6 @@ export default class DecryptedValue {
   }
 
   toString() {
-    return new Buffer(this.bi.toByteArray()).toString();
+    return new Buffer.from(this.bi.toByteArray()).toString();
   }
 }
