@@ -12,21 +12,16 @@ const storage = multer.diskStorage({
   filename: function (req, file, cb) {
     cb(
       null,
-      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+      Date.now() + path.extname(file.originalname)
     );
   },
 });
-
 let upload = multer({ storage: storage });
 
 const initWebRoute = (app) => {
   router.get("/", appController.getHomePage);
   router.post("/sign", upload.single("file_sign"), appController.getSign);
-  router.post(
-    "/verify",
-    upload.array("files_sign", 2),
-    appController.getVerify
-  );
+  router.post("/verify", upload.single("file_sign"), appController.getVerify);
   router.get("/clear", appController.clearCache);
   return app.use("/", router);
 };

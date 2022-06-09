@@ -13,15 +13,7 @@
     </h3>
     <h4>Ký văn bản</h4>
     <form action="/sign" method="post" enctype="multipart/form-data">
-        <label for="p">Số nguyên tố p</label>
-        <input type="text" name="p" required placeholder="<%= signature.p%>"><br>
-        <label for="g">Alpha</label>
-        <input type="text" name="g" required placeholder="<%= signature.g%>"><br>
-        <!-- <label for=" x">Khóa bí mật(x)</label>
-        <input type="text" name="x" required placeholder="<%= signature.x%>"><br> -->
-        <label for=" y">Khóa công khai(y)</label>
-        <input type="text" name="y" required placeholder="<%= signature.y%>"><br>
-        <label for=" sign">Chữ ký</label><br>
+        <label for=" sign">Tải file</label><br>
         <a href="<%=signature.sign%>" download>Download</a><br>
         <label for=" file_sign">Tải file lên</label>
         <input type="file" name="file_sign"><br>
@@ -29,16 +21,8 @@
     </form>
     <h4>Xác thực chữ ký</h4>
     <form action="/verify" method="post" enctype="multipart/form-data">
-        <label for="p">Số nguyên tố p</label>
-        <input type="text" name="p"><br>
-        <label for="g">Alpha</label>
-        <input type="text" name="g"><br>
-        <label for="x">Khóa bí mật(x)</label>
-        <input type="text" name="x"><br>
-        <label for="y">Khóa công khai(y)</label>
-        <input type="text" name="y"><br>
-        <label for="files_sign">Tải file lên</label>
-        <input type="file" name="files_sign" multiple><br>
+        <label for="file_sign">Tải file lên</label>
+        <input type="file" name="file_sign"><br>
         <input type="submit" value="Xác thực">
     </form>
 </body>

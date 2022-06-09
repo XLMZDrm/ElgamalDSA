@@ -1,17 +1,18 @@
 import ElGamal from "../models/index";
 import path from "path";
 import fse from "fs-extra";
-var mess = "";
-var message = { mess: mess };
-var sign = "";
-var p;
-var g;
-var x;
-var y;
-var signature = { sign: sign, p: p, g: g, y: y, x: x };
+import extract from "extract-zip";
+import EncryptedValue from "../models/encrypted-value";
+import { BigInteger } from "jsbn";
+var zip = require('cross-zip');
 const crypto = require("crypto");
 const fs = require("fs");
 var appRoot = require("app-root-path");
+// send
+var mess = "";
+var message = { mess: mess };
+var sign = "";
+var signature = { sign: sign };
 let getHomePage = (req, res) => {
   try {
     message.mess = "WELCOME BRO";
@@ -21,36 +22,25 @@ let getHomePage = (req, res) => {
     return res.redirect("/");
   }
 };
-function compareJSON(a, b) {
-  for (var prop in a) {
-    for (var miniProp in prop) {
-      if (a[prop][miniProp] !== b[prop][miniProp]) {
-        return false;
-      }
-    }
-  }
-  return true;
-}
 let getSign = async (req, res) => {
   try {
-    p = req.body.p;
-    g = req.body.g;
-    x = 1;
-    y = req.body.y;
-    const eg = new ElGamal(p, g, y, x);
+    fs.renameSync(appRoot + "/src/public/files/" + req.file.filename, appRoot + '/src/public/files/' + req.file.filename + ".zip");
+    await extract(appRoot + "/src/public/files/" + req.file.filename + ".zip", { dir: appRoot + "/src/public/files/" + req.file.filename + "_unzip/" });
     const fileBuffer = fs.readFileSync(
-      appRoot + "/src/public/files/" + req.file.filename
+      appRoot + "/src/public/files/" + req.file.filename + "_unzip/[Content_Types].xml"
     );
     const hashSum = crypto.createHash("sha256");
     hashSum.update(fileBuffer);
     const hex = hashSum.digest("hex");
-    const enHex = await eg.encryptAsync(hex, 0);
-    fs.appendFileSync(
-      appRoot + "/src/public/files/" + req.file.filename + ".key",
-      JSON.stringify(enHex)
-    );
-    signature.sign = "/files/" + req.file.filename + ".key";
-    message.mess = "Ký thành công. Bấm nút download để tải file chữ ký.";
+    const eg = await ElGamal.generateAsync();
+    const enHex = await eg.encryptAsync(hex);
+    fs.appendFileSync(appRoot + "/src/public/files/" + req.file.filename + "_unzip/_rels/.keys", JSON.stringify(eg.getValues()));
+    fs.appendFileSync(appRoot + "/src/public/files/" + req.file.filename + "_unzip/_rels/.DS", JSON.stringify(enHex));
+    zip.zip(appRoot + "/src/public/files/" + req.file.filename + "_unzip", appRoot + "/src/public/files/" + req.file.filename + "_DS" + ".zip", () => {
+      fs.renameSync(appRoot + "/src/public/files/" + req.file.filename + "_DS" + ".zip", appRoot + "/src/public/files/DS_" + req.file.filename);
+    });
+    signature.sign = "/files/DS_" + req.file.filename;
+    message.mess = "Ký thành công. Bấm nút download để tải file.";
     return res.render("home", { message: message, signature: signature });
   } catch (error) {
     console.log(error);
@@ -58,42 +48,35 @@ let getSign = async (req, res) => {
   }
 };
 let getVerify = async (req, res) => {
+  var keys, DS;
   try {
-    p = req.body.p;
-    g = req.body.g;
-    x = req.body.x;
-    y = req.body.y;
-    const files = req.files;
-    var eg = new ElGamal(p, g, y, x);
-    var fileKey;
-    var enHex;
-    var fileReHex;
-    var hex;
-    files.forEach((file) => {
-      if (path.extname(file.filename) === ".key") {
-        fileKey = fs.readFileSync(
-          appRoot + "/src/public/files/" + file.filename
-        );
-        fileKey = JSON.parse(fileKey);
-      } else {
-        const fileSign = fs.readFileSync(
-          appRoot + "/src/public/files/" + file.filename
-        );
-        const hashSum = crypto.createHash("sha256");
-        hashSum.update(fileSign);
-        hex = hashSum.digest("hex");
+    fs.renameSync(appRoot + "/src/public/files/" + req.file.filename, appRoot + '/src/public/files/' + req.file.filename + ".zip");
+    await extract(appRoot + "/src/public/files/" + req.file.filename + ".zip", { dir: appRoot + "/src/public/files/" + req.file.filename + "_unzip/" });
+    try {
+      keys = JSON.parse(fs.readFileSync(appRoot + "/src/public/files/" + req.file.filename + "_unzip/_rels/.keys", { encoding: 'utf-8' }));
+      DS = JSON.parse(fs.readFileSync(appRoot + "/src/public/files/" + req.file.filename + "_unzip/_rels/.DS", { encoding: 'utf-8' }));
+    } catch (error) {
+      message.mess = "Tài liệu chưa được ký hoặc có lỗi xảy ra.";
+      return res.render("home", { message: message, signature: signature });
+    }
+    var eg = new ElGamal(keys.p, keys.g, keys.y, keys.x);
+    var encrypt = new EncryptedValue();
+    encrypt.a = new BigInteger();
+    encrypt.b = new BigInteger();
+    for (var prop in DS) {
+      for (var mProp in DS[prop]) {
+        encrypt[prop][mProp] = DS[prop][mProp];
       }
-    });
-    enHex = await eg.encryptAsync(hex, 0);
-    fs.appendFileSync(
-      appRoot + "/src/public/files/" + files[0].filename + ".keys",
-      JSON.stringify(enHex)
+    }
+    var de = await eg.decryptAsync(encrypt);
+    de = de.toString();
+    const fileBuffer = fs.readFileSync(
+      appRoot + "/src/public/files/" + req.file.filename + "_unzip/[Content_Types].xml"
     );
-    fileReHex = fs.readFileSync(
-      appRoot + "/src/public/files/" + files[0].filename + ".keys"
-    );
-    fileReHex = JSON.parse(fileReHex);
-    if (compareJSON(fileKey, fileReHex)) {
+    const hashSum = crypto.createHash("sha256");
+    hashSum.update(fileBuffer);
+    const hex = hashSum.digest("hex");
+    if (de === hex) {
       message.mess = "Đây là tài liệu chuẩn, không bị chỉnh sửa.";
       return res.render("home", { message: message, signature: signature });
     } else {
@@ -102,11 +85,12 @@ let getVerify = async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    return res.redirect("/bug");
+    return res.redirect("/");
   }
 };
 let clearCache = (req, res) => {
   fse.emptyDirSync(appRoot + "/src/public/files/");
+  fs.appendFileSync(appRoot + "/src/public/files/.gitkeep", "");
   return res.redirect("/");
 };
 export default {

@@ -158,7 +158,7 @@ export default class ElGamal {
       return null;
     }
   }
-  async getValues() {
+  getValues() {
     return {
       p: this.p.toString(),
       g: this.g.toString(),
