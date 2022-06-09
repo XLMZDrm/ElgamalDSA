@@ -1,5 +1,4 @@
 import ElGamal from "../models/index";
-import path from "path";
 import fse from "fs-extra";
 import extract from "extract-zip";
 import EncryptedValue from "../models/encrypted-value";
