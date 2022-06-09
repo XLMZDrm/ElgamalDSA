@@ -55,7 +55,7 @@ let getVerify = async (req, res) => {
       keys = JSON.parse(fs.readFileSync(appRoot + "/src/public/files/" + req.file.filename + "_unzip/_rels/.keys", { encoding: 'utf-8' }));
       DS = JSON.parse(fs.readFileSync(appRoot + "/src/public/files/" + req.file.filename + "_unzip/_rels/.DS", { encoding: 'utf-8' }));
     } catch (error) {
-      message.mess = "Tài liệu chưa được ký hoặc có lỗi xảy ra.";
+      message.mess = "Tài liệu chưa được ký hoặc đã bị thay đổi";
       return res.render("home", { message: message, signature: signature });
     }
     var eg = new ElGamal(keys.p, keys.g, keys.y, keys.x);
@@ -79,7 +79,7 @@ let getVerify = async (req, res) => {
       message.mess = "Đây là tài liệu chuẩn, không bị chỉnh sửa.";
       return res.render("home", { message: message, signature: signature });
     } else {
-      message.mess = "Tài liệu đã bị thay đổi bạn không nên sử dụng";
+      message.mess = "Tài liệu chưa được ký hoặc đã bị thay đổi";
       return res.render("home", { message: message, signature: signature });
     }
   } catch (error) {
