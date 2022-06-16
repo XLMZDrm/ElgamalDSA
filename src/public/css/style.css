@@ -1,3 +1,13 @@
+body {
+    font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
+}
+
+form {
+    width: 225px;
+    margin: 0 auto;
+    text-align: center;
+}
+
 html {
     height: 100%;
 }
