@@ -6,25 +6,50 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
-    <h3>Message: <%= message.mess %>
-    </h3>
-    <h4>Ký văn bản</h4>
-    <form action="/sign" method="post" enctype="multipart/form-data">
-        <label for=" sign">Tải file</label><br>
-        <a href="<%=signature.sign%>" download>Download</a><br>
-        <label for=" file_sign">Tải file lên</label>
-        <input type="file" name="file_sign"><br>
-        <input type="submit" value="Ký">
-    </form>
-    <h4>Xác thực chữ ký</h4>
-    <form action="/verify" method="post" enctype="multipart/form-data">
-        <label for="file_sign">Tải file lên</label>
-        <input type="file" name="file_sign"><br>
-        <input type="submit" value="Xác thực">
-    </form>
+    <div class="elgamal">
+        <h2>Message: <%= message.mess %>
+        </h2>
+        <h2>Signature</h2>
+        <form action=" /sign" method="post" enctype="multipart/form-data" id="sign">
+            <div class="user-box">
+                <input type="file" name="file_sign" required>
+            </div>
+            <div class="user-box">
+                <% if(message.mess==="Ký thành công. Bấm nút download để tải file." ){ %>
+                    <a href="<%=signature.sign %>" download>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        Download</a><br>
+                    <% } %>
+            </div>
+            <a onclick="document.getElementById('sign').submit()">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                Submit
+            </a>
+        </form><br><br>
+        <h2>Verify</h2>
+        <form action=" /verify" method="post" enctype="multipart/form-data" id="verify">
+            <div class="user-box">
+                <input type="file" name="file_sign" required>
+            </div>
+            <a onclick="document.getElementById('verify').submit()">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                Submit
+            </a>
+        </form>
+    </div>
 </body>
 
 </html>
