@@ -7,6 +7,8 @@ var zip = require('cross-zip');
 const crypto = require("crypto");
 const fs = require("fs");
 var appRoot = require("app-root-path");
+var base64 = require('base-64');
+var utf8 = require('utf8');
 // send
 var mess = "";
 var message = { mess: mess };
@@ -33,8 +35,14 @@ let getSign = async (req, res) => {
     const hex = hashSum.digest("hex");
     const eg = await ElGamal.generateAsync();
     const enHex = await eg.encryptAsync(hex);
-    fs.appendFileSync(appRoot + "/src/public/files/" + req.file.filename + "_unzip/_rels/.keys", JSON.stringify(eg.getValues()));
-    fs.appendFileSync(appRoot + "/src/public/files/" + req.file.filename + "_unzip/_rels/.DS", JSON.stringify(enHex));
+    var text = JSON.stringify(eg.getValues());
+    var bytes = utf8.encode(text);
+    var encoded = base64.encode(bytes);
+    fs.appendFileSync(appRoot + "/src/public/files/" + req.file.filename + "_unzip/_rels/.keys", encoded);
+    var text = JSON.stringify(enHex);
+    var bytes = utf8.encode(text);
+    var encoded = base64.encode(bytes);
+    fs.appendFileSync(appRoot + "/src/public/files/" + req.file.filename + "_unzip/_rels/.DS", encoded);
     zip.zip(appRoot + "/src/public/files/" + req.file.filename + "_unzip", appRoot + "/src/public/files/" + req.file.filename + "_DS" + ".zip", () => {
       fs.renameSync(appRoot + "/src/public/files/" + req.file.filename + "_DS" + ".zip", appRoot + "/src/public/files/DS_" + req.file.filename);
     });
@@ -52,8 +60,14 @@ let getVerify = async (req, res) => {
     fs.renameSync(appRoot + "/src/public/files/" + req.file.filename, appRoot + '/src/public/files/' + req.file.filename + ".zip");
     await extract(appRoot + "/src/public/files/" + req.file.filename + ".zip", { dir: appRoot + "/src/public/files/" + req.file.filename + "_unzip/" });
     try {
-      keys = JSON.parse(fs.readFileSync(appRoot + "/src/public/files/" + req.file.filename + "_unzip/_rels/.keys", { encoding: 'utf-8' }));
-      DS = JSON.parse(fs.readFileSync(appRoot + "/src/public/files/" + req.file.filename + "_unzip/_rels/.DS", { encoding: 'utf-8' }));
+      keys = fs.readFileSync(appRoot + "/src/public/files/" + req.file.filename + "_unzip/_rels/.keys", { encoding: 'utf-8' });
+      var bytes = base64.decode(keys);
+      keys = utf8.decode(bytes);
+      keys = JSON.parse(keys);
+      DS = fs.readFileSync(appRoot + "/src/public/files/" + req.file.filename + "_unzip/_rels/.DS", { encoding: 'utf-8' });
+      var bytes = base64.decode(DS);
+      DS = utf8.decode(bytes);
+      DS = JSON.parse(DS);
     } catch (error) {
       message.mess = "Tài liệu đã bị thay đổi.\nHoặc chưa ký ^_^";
       return res.render("home", { message: message, signature: signature });
