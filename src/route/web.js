@@ -20,13 +20,11 @@ let upload = multer({ storage: storage });
 
 const initWebRoute = (app) => {
   router.get("/", appController.getHomePage);
-  router.post("/sign", upload.single("file_sign"), appController.getSign);
-  router.post("/verify", upload.single("file_sign"), appController.getVerify);
   router.post("/generateKey", appController.generateKey);
   router.get("/clear", appController.clearCache);
-  router.get("/text", appController.getTextPage);
-  router.get("/txt", appController.getTxtFilePage);
-  router.get("/docx", appController.getDocxPage);
+  router.post("/text", appController.signText);
+  router.post("/txt", appController.getTxtFilePage);
+  router.post("/docx", appController.getDocxPage);
   return app.use("/", router);
 };
 export default initWebRoute;

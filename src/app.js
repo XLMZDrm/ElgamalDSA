@@ -17,3 +17,10 @@ app.listen(PORT, () => {
   const time = 10;
   herokuAwake(url, time);
 });
+
+// var appRoot = require('app-root-path');
+// const WordExtractor = require("word-extractor");
+// const extractor = new WordExtractor();
+// const extracted = extractor.extract(appRoot+"/src/public/files/a.docx");
+
+// extracted.then(function(doc) { console.log(doc.getBody()); });
