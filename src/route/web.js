@@ -22,7 +22,11 @@ const initWebRoute = (app) => {
   router.get("/", appController.getHomePage);
   router.post("/sign", upload.single("file_sign"), appController.getSign);
   router.post("/verify", upload.single("file_sign"), appController.getVerify);
+  router.post("/generateKey", appController.generateKey);
   router.get("/clear", appController.clearCache);
+  router.get("/text", appController.getTextPage);
+  router.get("/txt", appController.getTxtFilePage);
+  router.get("/docx", appController.getDocxPage);
   return app.use("/", router);
 };
 export default initWebRoute;

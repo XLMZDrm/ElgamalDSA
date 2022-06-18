@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div class="elgamal">
+        <h2>Message: <%= message.mess %>
+        </h2>
+        <h2>Signature</h2>
+        <form action=" /sign" method="post" enctype="multipart/form-data" id="sign">
+            <div class="user-box">
+                <textarea name="key" cols="30" rows="10" placeholder="Key"></textarea>
+            </div>
+            <div class="user-box">
+                <input type="file" name="file_sign" required>
+            </div>
+            <a onclick="document.getElementById('sign').submit()">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                Sign
+            </a>
+        </form><br><br>
+        <h2>Verify</h2>
+        <form action=" /verify" method="post" enctype="multipart/form-data" id="verify">
+            <div class="user-box">
+                <input type="file" name="file_sign" required>
+            </div>
+            <a onclick="document.getElementById('verify').submit()">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                Verify
+            </a>
+        </form>
+    </div>
+
+</body>
+
+</html>

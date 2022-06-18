@@ -17,4 +17,3 @@ app.listen(PORT, () => {
   const time = 10;
   herokuAwake(url, time);
 });
-

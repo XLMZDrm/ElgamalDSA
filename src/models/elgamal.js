@@ -3,7 +3,8 @@ import DecryptedValue from "./decrypted-value";
 import EncryptedValue from "./encrypted-value";
 import * as Errors from "./errors";
 import * as Utils from "./utils";
-
+var base64 = require('base-64');
+var utf8 = require('utf8');
 /**
  * Provides methods for the ElGamal cryptosystem.
  */
@@ -68,7 +69,17 @@ export default class ElGamal {
 
     return new ElGamal(p, g, y, x);
   }
-
+  /**
+   * Generate a new Elgamal instance with base64 key.
+   * @param {string} key Base64 key.
+   * @returns 
+   */
+  static async getElgamalBase64(key) {
+    var bytes = base64.decode(key);
+    key = utf8.decode(bytes);
+    key = JSON.parse(key);
+    return new ElGamal(key.p, key.g, key.y, key.x);
+  }
   /**
    * Creates a new ElGamal instance.
    * @param {BigInt|string|number} p Safe prime number.
@@ -129,7 +140,36 @@ export default class ElGamal {
       return null;
     }
   }
+  /**
+     * Encrypts a message.
+     * @param {string|BigInt|number} m Piece of data to be encrypted, which must
+     * be numerically smaller than `p`.
+     * @param {BigInt|string|number} [k] A secret number, chosen randomly in the
+     * closed range `[1, p-2]`.
+     * @returns {String:Base64}
+     */
+  async encryptBase64(m, k) {
+    if (this.isOK()) {
+      const tmpKey =
+        Utils.parseBigInt(k) ||
+        (await Utils.getRandomBigIntAsync(
+          BigInt.ONE,
+          this.p.subtract(BigInt.ONE)
+        ));
+      const mBi = new DecryptedValue(m).bi;
+      const p = this.p;
 
+      const a = this.g.modPow(tmpKey, p);
+      const b = this.y.modPow(tmpKey, p).multiply(mBi).remainder(p);
+
+      var result = new EncryptedValue(a, b);
+      var bytes = utf8.encode(JSON.stringify(result));
+      var encoded = base64.encode(bytes);
+      return encoded;
+    } else {
+      return null;
+    }
+  }
   /**
    * Decrypts a message.
    * @param {EncryptedValue} m Piece of data to be decrypted.
@@ -158,7 +198,49 @@ export default class ElGamal {
       return null;
     }
   }
-  getValues() {
+  /**
+ * Decrypts a message.
+ * @param {EncryptedValue} m Piece of data to be decrypted.
+ * @throws {MissingPrivateKeyError}
+ * @returns {string}
+ */
+  async decryptBase64(m) {
+    if (this.isOK()) {
+      if (!this.x) throw new Errors.MissingPrivateKeyError();
+      var bytes = base64.decode(m);
+      m = utf8.decode(bytes);
+      m = JSON.parse(m);
+      var encrypt = new EncryptedValue();
+      encrypt.a = new BigInt();
+      encrypt.b = new BigInt();
+      for (var prop in m) {
+        for (var mProp in m[prop]) {
+          encrypt[prop][mProp] = m[prop][mProp];
+        }
+      }
+      const p = this.p;
+      const r = await Utils.getRandomBigIntAsync(
+        Utils.BIG_TWO,
+        this.p.subtract(BigInt.ONE)
+      );
+
+      const aBlind = this.g.modPow(r, p).multiply(encrypt.a).remainder(p);
+      const ax = aBlind.modPow(this.x, p);
+
+      const plaintextBlind = ax.modInverse(p).multiply(encrypt.b).remainder(p);
+      const plaintext = this.y.modPow(r, p).multiply(plaintextBlind).remainder(p);
+
+      var result = new DecryptedValue(plaintext);
+      return result.toString();
+    } else {
+      return null;
+    }
+  }
+  /**
+  * Get key.
+  * @returns {object}
+  */
+  getKey() {
     return {
       p: this.p.toString(),
       g: this.g.toString(),
@@ -166,5 +248,14 @@ export default class ElGamal {
       x: this.x.toString(),
     };
   }
-  // async converChar(char) {}
+  /**
+* Get key (base64).
+* @returns {string}
+*/
+  getKeyBase64() {
+    var key = this.getKey();
+    var bytes = utf8.encode(JSON.stringify(key));
+    var encoded = base64.encode(bytes);
+    return encoded;
+  }
 }
