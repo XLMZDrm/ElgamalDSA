@@ -19,12 +19,15 @@ const storage = multer.diskStorage({
 let upload = multer({ storage: storage });
 
 const initWebRoute = (app) => {
-  router.get("/", appController.getHomePage);
+  // post
   router.post("/generateKey", appController.generateKey);
+  router.post("/signText", appController.signText);
+  router.post("/verifyText", appController.verifyText);
+  router.post("/readingFile", upload.single("file_sign"), appController.readingFile);
+  // get
+  router.get("/reset", appController.reset);
+  router.get("/", appController.getHomePage);
   router.get("/clear", appController.clearCache);
-  router.post("/text", appController.signText);
-  router.post("/txt", appController.getTxtFilePage);
-  router.post("/docx", appController.getDocxPage);
   return app.use("/", router);
 };
 export default initWebRoute;

@@ -1,42 +1,118 @@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!-- <link rel="stylesheet" href="/css/style.css"> -->
+    <title>ElGamal DSA</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/main.js"></script>
 </head>
 
 <body>
+    <div class="test">
+        <h2>Message: <%= message.mess %>
+        </h2>
+        <h2>Sinh khóa</h2>
+        <form action="/generateKey" method="post" id="generateKey">
+            <div class="user-box">
+                <input type="text" name="key" value="<%=signature.key%>">
+                <label>Khóa</label>
+            </div>
+            <div class=" user-box">
+                <a onclick=" document.getElementById('generateKey').submit()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    Sinh khóa
+                </a>
+                <a href="/reset">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    Reset
+                </a>
+            </div>
+        </form>
+    </div>
     <div class="elgamal">
-        <div class="generateKey">
-            <form action="/generateKey" method="post">
-                <label for="key">Key</label><br>
-                <textarea name="key" cols="20" rows="5"><%=signature.key%></textarea>
-                <input type="submit" value="Generate key">
-            </form>
-            <form action="/text" method="post">
-                <label for="key">Key</label><br>
-                <textarea name="key" cols="20" rows="5"><%=signature.key%></textarea><br>
-                <label for="text">Text</label><br>
-                <textarea name="text" cols="20" rows="5"></textarea><br>
-                <button type="submit">Sign</button><br>
-                <label for="signature">Signature</label> <br>
-                <textarea name="signature" cols="20" rows="5"><%=signature.sign%></textarea>
-            </form>
-            <form action="/verifyText" method="post">
-                <label for="key">Key</label><br>
-                <textarea name="key" cols="20" rows="5"><%=signature.key%></textarea><br>
-                <label for="text">Text</label><br>
-                <textarea name="text" cols="20" rows="5"></textarea><br>
-                <label for="signature">Signature</label> <br>
-                <textarea name="signature" cols="20" rows="5"></textarea><br>
-                <button type="submit">Verify</button><br>
-                <label for="">Signature</label> <br>
-                <textarea name="" cols="20" rows="5"><%= message.mess%></textarea>
-            </form>
-        </div>
+        <h2>Signature</h2>
+        <form action="/signText" method="post" id="signText">
+            <div class="user-box">
+                <input type="text" name="key" value="<%=signature.key%>"><br>
+                <label>Khóa</label>
+            </div>
+            <div class="user-box">
+                <!-- <input type="text" name="text" value="<%=signature.text%>"><br> -->
+                <textarea name="text" cols="30" rows="4"><%=signature.text%></textarea><br>
+                <label>Văn bản</label>
+            </div>
+            <div class=" user-box">
+                <a onclick=" document.getElementById('signText').submit()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    Ký
+                </a>
+                <a onclick="move()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    Chuyển
+                </a>
+            </div><br><br>
+            <div class="user-box">
+                <input type="text" name="sign" value="<%=signature.sign%>">
+                <label>Chữ ký</label>
+            </div>
+        </form><br>
+        <h2>Verify</h2>
+        <form action="/verifyText" method="post" id="verifyText">
+            <div class="user-box">
+                <input type="text" name="key" value="<%=signature.key%>">
+                <label>Khóa</label>
+            </div>
+            <div class="user-box">
+                <textarea name="text" cols="30" rows="4"></textarea><br>
+                <label>Văn bản</label>
+            </div>
+            <div class="user-box">
+                <input type="text" name="sign">
+                <label>Chữ ký</label>
+            </div>
+            <div class=" user-box">
+                <a onclick=" document.getElementById('verifyText').submit()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    Xác thực
+                </a>
+            </div>
+        </form>
+    </div>
+    <div class="test2">
+        <h2>Đọc file</h2>
+        <form action="/readingFile" method="post" id="readingFile" enctype="multipart/form-data">
+            <div class="user-box">
+                <input type="file" name="file_sign">
+                <label>File</label>
+            </div>
+            <div class=" user-box">
+                <a onclick=" document.getElementById('readingFile').submit()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    Đọc file
+                </a>
+            </div>
+        </form>
     </div>
 </body>
 

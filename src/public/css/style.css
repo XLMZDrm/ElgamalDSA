@@ -1,15 +1,10 @@
-/* body {
-    font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
+html {
+    height: 100%;
 }
 
 form {
-    width: 225px;
     margin: 0 auto;
     text-align: center;
-}
-
-html {
-    height: 100%;
 }
 
 body {
@@ -23,7 +18,7 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 400px;
+    width: 600px;
     padding: 40px;
     transform: translate(-50%, -50%);
     background: rgba(0, 0, 0, .5);
@@ -35,7 +30,7 @@ body {
 .elgamal h2 {
     margin: 0 0 30px;
     padding: 0;
-    color: #fff;
+    color: #03e9f4;
     text-align: center;
 }
 
@@ -47,10 +42,10 @@ body {
     width: 100%;
     padding: 10px 0;
     font-size: 16px;
-    color: #fff;
+    color: #03e9f4;
     margin-bottom: 30px;
     border: none;
-    border-bottom: 1px solid #fff;
+    border-bottom: 1px solid #03e9f4;
     outline: none;
     background: transparent;
 }
@@ -61,7 +56,7 @@ body {
     left: 0;
     padding: 10px 0;
     font-size: 16px;
-    color: #fff;
+    color: #03e9f4;
     pointer-events: none;
     transition: .5s;
 }
@@ -90,7 +85,7 @@ body {
 
 .elgamal a:hover {
     background: #03e9f4;
-    color: #fff;
+    color: #03e9f4;
     border-radius: 5px;
     box-shadow: 0 0 5px #03e9f4,
         0 0 25px #03e9f4,
@@ -184,4 +179,863 @@ body {
     100% {
         bottom: 100%;
     }
-} */
+}
+
+/* test */
+
+.test {
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    width: 400px;
+    padding: 40px;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, .5);
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
+    border-radius: 10px;
+}
+
+.test h2 {
+    margin: 0 0 30px;
+    padding: 0;
+    color: #03e9f4;
+    text-align: center;
+}
+
+.test .user-box {
+    position: relative;
+}
+
+.test .user-box input {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #03e9f4;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 1px solid #03e9f4;
+    outline: none;
+    background: transparent;
+}
+
+.test .user-box label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #03e9f4;
+    pointer-events: none;
+    transition: .5s;
+}
+
+.test .user-box input:focus~label,
+.test .user-box input:valid~label {
+    top: -20px;
+    left: 0;
+    color: #03e9f4;
+    font-size: 12px;
+}
+
+.test form a {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    color: #03e9f4;
+    font-size: 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: .5s;
+    margin-top: 40px;
+    letter-spacing: 4px
+}
+
+.test a:hover {
+    background: #03e9f4;
+    color: #03e9f4;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #03e9f4,
+        0 0 25px #03e9f4,
+        0 0 50px #03e9f4,
+        0 0 100px #03e9f4;
+}
+
+.test a span {
+    position: absolute;
+    display: block;
+}
+
+.test a span:nth-child(1) {
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #03e9f4);
+    animation: btn-anim1 1s linear infinite;
+}
+
+@keyframes btn-anim1 {
+    0% {
+        left: -100%;
+    }
+
+    50%,
+    100% {
+        left: 100%;
+    }
+}
+
+.test a span:nth-child(2) {
+    top: -100%;
+    right: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, #03e9f4);
+    animation: btn-anim2 1s linear infinite;
+    animation-delay: .25s
+}
+
+@keyframes btn-anim2 {
+    0% {
+        top: -100%;
+    }
+
+    50%,
+    100% {
+        top: 100%;
+    }
+}
+
+.test a span:nth-child(3) {
+    bottom: 0;
+    right: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(270deg, transparent, #03e9f4);
+    animation: btn-anim3 1s linear infinite;
+    animation-delay: .5s
+}
+
+@keyframes btn-anim3 {
+    0% {
+        right: -100%;
+    }
+
+    50%,
+    100% {
+        right: 100%;
+    }
+}
+
+.test a span:nth-child(4) {
+    bottom: -100%;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(360deg, transparent, #03e9f4);
+    animation: btn-anim4 1s linear infinite;
+    animation-delay: .75s
+}
+
+@keyframes btn-anim4 {
+    0% {
+        bottom: -100%;
+    }
+
+    50%,
+    100% {
+        bottom: 100%;
+    }
+}
+
+/* test2 */
+.test2 {
+    position: absolute;
+    top: 50%;
+    left: 80%;
+    width: 400px;
+    padding: 40px;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, .5);
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
+    border-radius: 10px;
+}
+
+.test2 h2 {
+    margin: 0 0 30px;
+    padding: 0;
+    color: #03e9f4;
+    text-align: center;
+}
+
+.test2 .user-box {
+    position: relative;
+}
+
+.test2 .user-box input {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #03e9f4;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 1px solid #03e9f4;
+    outline: none;
+    background: transparent;
+}
+
+.test2 .user-box label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #03e9f4;
+    pointer-events: none;
+    transition: .5s;
+}
+
+.test2 .user-box input:focus~label,
+.test2 .user-box input:valid~label {
+    top: -20px;
+    left: 0;
+    color: #03e9f4;
+    font-size: 12px;
+}
+
+.test2 form a {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    color: #03e9f4;
+    font-size: 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: .5s;
+    margin-top: 40px;
+    letter-spacing: 4px
+}
+
+.test2 a:hover {
+    background: #03e9f4;
+    color: #03e9f4;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #03e9f4,
+        0 0 25px #03e9f4,
+        0 0 50px #03e9f4,
+        0 0 100px #03e9f4;
+}
+
+.test2 a span {
+    position: absolute;
+    display: block;
+}
+
+.test2 a span:nth-child(1) {
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #03e9f4);
+    animation: btn-anim1 1s linear infinite;
+}
+
+@keyframes btn-anim1 {
+    0% {
+        left: -100%;
+    }
+
+    50%,
+    100% {
+        left: 100%;
+    }
+}
+
+.test2 a span:nth-child(2) {
+    top: -100%;
+    right: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, #03e9f4);
+    animation: btn-anim2 1s linear infinite;
+    animation-delay: .25s
+}
+
+@keyframes btn-anim2 {
+    0% {
+        top: -100%;
+    }
+
+    50%,
+    100% {
+        top: 100%;
+    }
+}
+
+.test2 a span:nth-child(3) {
+    bottom: 0;
+    right: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(270deg, transparent, #03e9f4);
+    animation: btn-anim3 1s linear infinite;
+    animation-delay: .5s
+}
+
+@keyframes btn-anim3 {
+    0% {
+        right: -100%;
+    }
+
+    50%,
+    100% {
+        right: 100%;
+    }
+}
+
+.test2 a span:nth-child(4) {
+    bottom: -100%;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(360deg, transparent, #03e9f4);
+    animation: btn-anim4 1s linear infinite;
+    animation-delay: .75s
+}
+
+@keyframes btn-anim4 {
+    0% {
+        bottom: -100%;
+    }
+
+    50%,
+    100% {
+        bottom: 100%;
+    }
+}
+
+
+
+html {
+    height: 100%;
+}
+
+form {
+    margin: 0 auto;
+    text-align: center;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: linear-gradient(#141e30, #243b55);
+}
+
+.elgamal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 600px;
+    padding: 40px;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, .5);
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
+    border-radius: 10px;
+}
+
+.elgamal h2 {
+    margin: 0 0 30px;
+    padding: 0;
+    color: #03e9f4;
+    text-align: center;
+}
+
+.elgamal .user-box {
+    position: relative;
+}
+
+.elgamal .user-box textarea {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #03e9f4;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 1px solid #03e9f4;
+    outline: none;
+    background: transparent;
+}
+
+.elgamal .user-box label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #03e9f4;
+    pointer-events: none;
+    transition: .5s;
+}
+
+.elgamal .user-box textarea:focus~label,
+.elgamal .user-box textarea:valid~label {
+    top: -20px;
+    left: 0;
+    color: #03e9f4;
+    font-size: 12px;
+}
+
+.elgamal form a {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    color: #03e9f4;
+    font-size: 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: .5s;
+    margin-top: 40px;
+    letter-spacing: 4px
+}
+
+.elgamal a:hover {
+    background: #03e9f4;
+    color: #03e9f4;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #03e9f4,
+        0 0 25px #03e9f4,
+        0 0 50px #03e9f4,
+        0 0 100px #03e9f4;
+}
+
+.elgamal a span {
+    position: absolute;
+    display: block;
+}
+
+.elgamal a span:nth-child(1) {
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #03e9f4);
+    animation: btn-anim1 1s linear infinite;
+}
+
+@keyframes btn-anim1 {
+    0% {
+        left: -100%;
+    }
+
+    50%,
+    100% {
+        left: 100%;
+    }
+}
+
+.elgamal a span:nth-child(2) {
+    top: -100%;
+    right: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, #03e9f4);
+    animation: btn-anim2 1s linear infinite;
+    animation-delay: .25s
+}
+
+@keyframes btn-anim2 {
+    0% {
+        top: -100%;
+    }
+
+    50%,
+    100% {
+        top: 100%;
+    }
+}
+
+.elgamal a span:nth-child(3) {
+    bottom: 0;
+    right: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(270deg, transparent, #03e9f4);
+    animation: btn-anim3 1s linear infinite;
+    animation-delay: .5s
+}
+
+@keyframes btn-anim3 {
+    0% {
+        right: -100%;
+    }
+
+    50%,
+    100% {
+        right: 100%;
+    }
+}
+
+.elgamal a span:nth-child(4) {
+    bottom: -100%;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(360deg, transparent, #03e9f4);
+    animation: btn-anim4 1s linear infinite;
+    animation-delay: .75s
+}
+
+@keyframes btn-anim4 {
+    0% {
+        bottom: -100%;
+    }
+
+    50%,
+    100% {
+        bottom: 100%;
+    }
+}
+
+/* test */
+
+.test {
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    width: 400px;
+    padding: 40px;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, .5);
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
+    border-radius: 10px;
+}
+
+.test h2 {
+    margin: 0 0 30px;
+    padding: 0;
+    color: #03e9f4;
+    text-align: center;
+}
+
+.test .user-box {
+    position: relative;
+}
+
+.test .user-box textarea {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #03e9f4;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 1px solid #03e9f4;
+    outline: none;
+    background: transparent;
+}
+
+.test .user-box label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #03e9f4;
+    pointer-events: none;
+    transition: .5s;
+}
+
+.test .user-box textarea:focus~label,
+.test .user-box textarea:valid~label {
+    top: -20px;
+    left: 0;
+    color: #03e9f4;
+    font-size: 12px;
+}
+
+.test form a {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    color: #03e9f4;
+    font-size: 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: .5s;
+    margin-top: 40px;
+    letter-spacing: 4px
+}
+
+.test a:hover {
+    background: #03e9f4;
+    color: #03e9f4;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #03e9f4,
+        0 0 25px #03e9f4,
+        0 0 50px #03e9f4,
+        0 0 100px #03e9f4;
+}
+
+.test a span {
+    position: absolute;
+    display: block;
+}
+
+.test a span:nth-child(1) {
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #03e9f4);
+    animation: btn-anim1 1s linear infinite;
+}
+
+@keyframes btn-anim1 {
+    0% {
+        left: -100%;
+    }
+
+    50%,
+    100% {
+        left: 100%;
+    }
+}
+
+.test a span:nth-child(2) {
+    top: -100%;
+    right: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, #03e9f4);
+    animation: btn-anim2 1s linear infinite;
+    animation-delay: .25s
+}
+
+@keyframes btn-anim2 {
+    0% {
+        top: -100%;
+    }
+
+    50%,
+    100% {
+        top: 100%;
+    }
+}
+
+.test a span:nth-child(3) {
+    bottom: 0;
+    right: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(270deg, transparent, #03e9f4);
+    animation: btn-anim3 1s linear infinite;
+    animation-delay: .5s
+}
+
+@keyframes btn-anim3 {
+    0% {
+        right: -100%;
+    }
+
+    50%,
+    100% {
+        right: 100%;
+    }
+}
+
+.test a span:nth-child(4) {
+    bottom: -100%;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(360deg, transparent, #03e9f4);
+    animation: btn-anim4 1s linear infinite;
+    animation-delay: .75s
+}
+
+@keyframes btn-anim4 {
+    0% {
+        bottom: -100%;
+    }
+
+    50%,
+    100% {
+        bottom: 100%;
+    }
+}
+
+/* test2 */
+.test2 {
+    position: absolute;
+    top: 50%;
+    left: 80%;
+    width: 400px;
+    padding: 40px;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, .5);
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
+    border-radius: 10px;
+}
+
+.test2 h2 {
+    margin: 0 0 30px;
+    padding: 0;
+    color: #03e9f4;
+    text-align: center;
+}
+
+.test2 .user-box {
+    position: relative;
+}
+
+.test2 .user-box textarea {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #03e9f4;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 1px solid #03e9f4;
+    outline: none;
+    background: transparent;
+}
+
+.test2 .user-box label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #03e9f4;
+    pointer-events: none;
+    transition: .5s;
+}
+
+.test2 .user-box textarea:focus~label,
+.test2 .user-box textarea:valid~label {
+    top: -20px;
+    left: 0;
+    color: #03e9f4;
+    font-size: 12px;
+}
+
+.test2 form a {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    color: #03e9f4;
+    font-size: 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: .5s;
+    margin-top: 40px;
+    letter-spacing: 4px
+}
+
+.test2 a:hover {
+    background: #03e9f4;
+    color: #03e9f4;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #03e9f4,
+        0 0 25px #03e9f4,
+        0 0 50px #03e9f4,
+        0 0 100px #03e9f4;
+}
+
+.test2 a span {
+    position: absolute;
+    display: block;
+}
+
+.test2 a span:nth-child(1) {
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #03e9f4);
+    animation: btn-anim1 1s linear infinite;
+}
+
+@keyframes btn-anim1 {
+    0% {
+        left: -100%;
+    }
+
+    50%,
+    100% {
+        left: 100%;
+    }
+}
+
+.test2 a span:nth-child(2) {
+    top: -100%;
+    right: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, #03e9f4);
+    animation: btn-anim2 1s linear infinite;
+    animation-delay: .25s
+}
+
+@keyframes btn-anim2 {
+    0% {
+        top: -100%;
+    }
+
+    50%,
+    100% {
+        top: 100%;
+    }
+}
+
+.test2 a span:nth-child(3) {
+    bottom: 0;
+    right: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(270deg, transparent, #03e9f4);
+    animation: btn-anim3 1s linear infinite;
+    animation-delay: .5s
+}
+
+@keyframes btn-anim3 {
+    0% {
+        right: -100%;
+    }
+
+    50%,
+    100% {
+        right: 100%;
+    }
+}
+
+.test2 a span:nth-child(4) {
+    bottom: -100%;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(360deg, transparent, #03e9f4);
+    animation: btn-anim4 1s linear infinite;
+    animation-delay: .75s
+}
+
+@keyframes btn-anim4 {
+    0% {
+        bottom: -100%;
+    }
+
+    50%,
+    100% {
+        bottom: 100%;
+    }
+}
