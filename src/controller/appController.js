@@ -4,6 +4,7 @@ import path from "path";
 const crypto = require('crypto');
 const fs = require("fs");
 var appRoot = require("app-root-path");
+const WordExtractor = require("word-extractor");
 // send
 var mess = "WELCOME";
 var message = { mess: mess };
@@ -104,6 +105,15 @@ let readingFile = async (req, res) => {
       var text = fs.readFileSync(appRoot + "/src/public/files/" + req.file.filename, "utf-8");
       signature.text = text;
       return res.redirect("/");
+    } else if (path.extname(req.file.filename) === '.docx' || path.extname(req.file.filename) === ".doc") {
+      var text;
+      const extractor = new WordExtractor();
+      const extracted = extractor.extract(appRoot + "/src/public/files/" + req.file.filename);
+      extracted.then(function (doc) {
+        text = doc.getBody();
+        signature.text = text;
+        return res.redirect("/");
+      });
     }
   } catch (error) {
     console.log(error);
