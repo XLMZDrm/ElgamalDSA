@@ -39,7 +39,7 @@
         </form>
     </div>
     <div class="elgamal">
-        <h2>Signature</h2>
+        <h2>Gửi</h2>
         <form action="/signText" method="post" id="signText">
             <div class="user-box">
                 <input type="text" name="key" value="<%=signature.key%>"><br>
@@ -71,7 +71,7 @@
                 <label>Chữ ký</label>
             </div>
         </form><br>
-        <h2>Verify</h2>
+        <h2>Nhận</h2>
         <form action="/verifyText" method="post" id="verifyText">
             <div class="user-box">
                 <input type="text" name="key" value="<%=signature.key%>">
