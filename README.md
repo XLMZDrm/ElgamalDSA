@@ -1,3 +1,3 @@
-# ElgamalWebApp
+# ElgamalDSA
 > 
 > Author: DIMP
