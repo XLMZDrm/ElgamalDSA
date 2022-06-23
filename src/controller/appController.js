@@ -51,7 +51,6 @@ let generateKey = async (req, res) => {
   try {
     var eg = await ElGamal.generateAsync();
     signature.key = eg.getKeyBase64();
-    // return res.render("home", { message: message, signature: signature });
     return res.redirect("/");
   } catch (error) {
     console.log(error);
