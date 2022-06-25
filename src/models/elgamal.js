@@ -87,7 +87,7 @@ export default class ElGamal {
    * @param {BigInt|string|number} y Public key.
    * @param {BigInt|string|number} x Private key.
    */
-  constructor (p, g, y, x) {
+  constructor(p, g, y, x) {
     this.p = Utils.parseBigInt(p);
     this.g = Utils.parseBigInt(g);
     this.y = Utils.parseBigInt(y);
@@ -200,7 +200,7 @@ export default class ElGamal {
   }
   /**
  * Decrypts a message.
- * @param {EncryptedValue} m Piece of data to be decrypted.
+ * @param {String:Base64} m Piece of data to be decrypted.
  * @throws {MissingPrivateKeyError}
  * @returns {string}
  */
@@ -214,8 +214,8 @@ export default class ElGamal {
       encrypt.a = new BigInt();
       encrypt.b = new BigInt();
       for (var prop in m) {
-        for (var mProp in m[ prop ]) {
-          encrypt[ prop ][ mProp ] = m[ prop ][ mProp ];
+        for (var mProp in m[prop]) {
+          encrypt[prop][mProp] = m[prop][mProp];
         }
       }
       const p = this.p;
