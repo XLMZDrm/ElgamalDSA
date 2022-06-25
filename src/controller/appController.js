@@ -37,7 +37,7 @@ function change_alias(alias) {
 }
 let reset = async (req, res) => {
   try {
-    message.mess = "ElGamal DSA";
+    message.mess = "WELCOME";
     signature.sign = "";
     signature.key = "";
     signature.text = "";
