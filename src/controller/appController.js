@@ -20,21 +20,6 @@ let getHomePage = (req, res) => {
     return res.redirect("/");
   }
 };
-function change_alias(alias) {
-  var str = alias;
-  str = str.toLowerCase();
-  str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
-  str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
-  str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
-  str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
-  str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
-  str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
-  str = str.replace(/đ/g, "d");
-  str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g, " ");
-  str = str.replace(/ + /g, " ");
-  str = str.trim();
-  return str;
-}
 let reset = async (req, res) => {
   try {
     message.mess = "WELCOME";
@@ -66,7 +51,7 @@ let signText = async (req, res) => {
   try {
     var { key, text } = req.body;
     const hashSum = crypto.createHash('sha256');
-    hashSum.update(change_alias(text));
+    hashSum.update(text);
     const hex = hashSum.digest('hex');
     var elgamal = await ElGamal.getElgamalBase64(key);
     signature.sign = await elgamal.encryptBase64(hex);
@@ -84,7 +69,7 @@ let verifyText = async (req, res) => {
     var elgamal = await ElGamal.getElgamalBase64(key);
     var result = await elgamal.decryptBase64(sign);
     const hashSum = crypto.createHash('sha256');
-    hashSum.update(change_alias(text));
+    hashSum.update(text);
     const hex = hashSum.digest('hex');
     if (result.toString() === hex) {
       message.mess = "Chữ ký chuẩn.";
