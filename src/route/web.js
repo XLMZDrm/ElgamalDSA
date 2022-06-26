@@ -27,7 +27,6 @@ const initWebRoute = (app) => {
   // get
   router.get("/reset", appController.reset);
   router.get("/", appController.getHomePage);
-  router.get("/clear", appController.clearCache);
   return app.use("/", router);
 };
 export default initWebRoute;

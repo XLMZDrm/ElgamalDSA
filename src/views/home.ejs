@@ -111,13 +111,15 @@
                     <span></span>
                     Đọc file
                 </a>
-                <a href="/clear">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    clear
-                </a>
+                <% if(message.mess==="Ký thành công" ) {%>
+                    <a href="<%= signature.link%>">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        Download
+                    </a>
+                    <% } %>
             </div>
         </form>
     </div>

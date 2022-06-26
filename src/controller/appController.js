@@ -11,7 +11,8 @@ var message = { mess: mess };
 var sign = "";
 var key = "";
 var text = "";
-var signature = { sign: sign, key: key, text: text };
+var link = "";
+var signature = { sign: sign, key: key, text: text, link: link };
 let getHomePage = (req, res) => {
   try {
     return res.render("home", { message: message, signature: signature });
@@ -26,6 +27,7 @@ let reset = async (req, res) => {
     signature.sign = "";
     signature.key = "";
     signature.text = "";
+    clearCache();
     return res.redirect("/");
   } catch (error) {
     console.log(error);
@@ -42,10 +44,9 @@ let generateKey = async (req, res) => {
     return res.redirect("/");
   }
 };
-let clearCache = (req, res) => {
+let clearCache = () => {
   fse.emptyDirSync(appRoot + "/src/public/files/");
   fs.appendFileSync(appRoot + "/src/public/files/.gitkeep", "");
-  return res.redirect("/");
 };
 let signText = async (req, res) => {
   try {
@@ -55,7 +56,11 @@ let signText = async (req, res) => {
     const hex = hashSum.digest('hex');
     var elgamal = await ElGamal.getElgamalBase64(key);
     signature.sign = await elgamal.encryptBase64(hex);
+    let fileName = Date.now() + ".sig";
+    fs.appendFileSync(appRoot + "/src/public/files/" + fileName, signature.sign);
+    signature.link = "/files/" + fileName;
     signature.text = text;
+    message.mess = "Ký thành công";
     return res.redirect("/");
   } catch (error) {
     console.log(error);
