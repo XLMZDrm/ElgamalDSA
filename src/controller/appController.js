@@ -38,6 +38,10 @@ let generateKey = async (req, res) => {
   try {
     var eg = await ElGamal.generateAsync();
     signature.key = eg.getKeyBase64();
+    let fileName = Date.now() + ".key";
+    message.mess = "Tạo khoá thành công";
+    fs.appendFileSync(appRoot + "/src/public/files/" + fileName, signature.key);
+    signature.link = "/files/" + fileName;
     return res.redirect("/");
   } catch (error) {
     console.log(error);
@@ -103,6 +107,14 @@ let readingFile = async (req, res) => {
         signature.text = text;
         return res.redirect("/");
       });
+    } else if (path.extname(req.file.filename) === ".sig") {
+      var sig = fs.readFileSync(appRoot + "/src/public/files/" + req.file.filename, "utf-8");
+      signature.sign = sig;
+      return res.redirect("/");
+    } else if (path.extname(req.file.filename) === ".key") {
+      var key = fs.readFileSync(appRoot + "/src/public/files/" + req.file.filename, "utf-8");
+      signature.key = key;
+      return res.redirect("/");
     }
   } catch (error) {
     console.log(error);

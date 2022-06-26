@@ -37,7 +37,7 @@ export default class ElGamal {
    */
   x;
 
-  static async generateAsync(primeBits = 2048) {
+  static async generateAsync(primeBits = 512) {
     let q;
     let p;
     do {
@@ -135,7 +135,7 @@ export default class ElGamal {
       const a = this.g.modPow(tmpKey, p);
       const b = this.y.modPow(tmpKey, p).multiply(mBi).remainder(p);
 
-      return new EncryptedValue(a, b);
+      return new EncryptedValue(a.toString(), b.toString());
     } else {
       return null;
     }
@@ -162,7 +162,7 @@ export default class ElGamal {
       const a = this.g.modPow(tmpKey, p);
       const b = this.y.modPow(tmpKey, p).multiply(mBi).remainder(p);
 
-      var result = new EncryptedValue(a, b);
+      var result = new EncryptedValue(a.toString(), b.toString());
       var bytes = utf8.encode(JSON.stringify(result));
       var encoded = base64.encode(bytes);
       return encoded;
@@ -211,13 +211,8 @@ export default class ElGamal {
       m = utf8.decode(bytes);
       m = JSON.parse(m);
       var encrypt = new EncryptedValue();
-      encrypt.a = new BigInt();
-      encrypt.b = new BigInt();
-      for (var prop in m) {
-        for (var mProp in m[prop]) {
-          encrypt[prop][mProp] = m[prop][mProp];
-        }
-      }
+      encrypt.a = new BigInt(m.a);
+      encrypt.b = new BigInt(m.b);
       const p = this.p;
       const r = await Utils.getRandomBigIntAsync(
         Utils.BIG_TWO,
