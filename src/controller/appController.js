@@ -6,7 +6,7 @@ const fs = require("fs");
 var appRoot = require("app-root-path");
 const WordExtractor = require("word-extractor");
 // send
-var mess = "WELCOME";
+var mess = "WELCOME bro";
 var message = { mess: mess };
 var sign = "";
 var key = "";
