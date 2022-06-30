@@ -1,4 +1,8 @@
 # ElgamalDSA
+> Installation
+- Insatll nodejs v16.15.1, yarn
+
 > Usage
-- cmd: yarn && yarn start
-> Author: DIMP
+- yarn start
+
+> Author: DIMP from team 4 (ATBMTT)
