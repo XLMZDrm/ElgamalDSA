@@ -1,6 +1,6 @@
 # ElgamalDSA
 > Installation
-- Insatll nodejs v16.15.1, yarn
+- Install nodejs v16.15.1, yarn
 
 > Usage
 - yarn start
