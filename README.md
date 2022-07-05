@@ -5,4 +5,4 @@
 > Usage
 - yarn start
 
-> Author: DIMP from team 4 (ATBMTT)
+> Author: drm
