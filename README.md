@@ -1,8 +1,4 @@
 # ElgamalDSA
-> Installation
-- Install nodejs v16.15.1, yarn
-
-> Usage
-- yarn start
+- demo: https://elgm-dsa.herokuapp.com/
 
 > Author: drm
