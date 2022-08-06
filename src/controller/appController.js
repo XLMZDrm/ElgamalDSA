@@ -21,7 +21,7 @@ let getHomePage = (req, res) => {
     return res.redirect("/");
   }
 };
-let reset = async (req, res) => {
+let reset = (req, res) => {
   try {
     message.mess = "WELCOME";
     signature.sign = "";
@@ -92,12 +92,13 @@ let verifyText = async (req, res) => {
     return res.redirect("/");
   }
 };
-let readingFile = async (req, res) => {
+let readingFile = (req, res) => {
   try {
     if (path.extname(req.file.filename) === ".txt") {
-      var text = fs.readFileSync(appRoot + "/src/public/files/" + req.file.filename, "utf-8");
-      signature.text = text;
-      return res.redirect("/");
+      fs.readFile(appRoot + "/src/public/files/" + req.file.filename, "utf-8", (err, data) => {
+        signature.text = data;
+        res.redirect("/");
+      });
     } else if (path.extname(req.file.filename) === '.docx' || path.extname(req.file.filename) === ".doc") {
       var text;
       const extractor = new WordExtractor();
@@ -105,16 +106,18 @@ let readingFile = async (req, res) => {
       extracted.then(function (doc) {
         text = doc.getBody();
         signature.text = text;
-        return res.redirect("/");
+        res.redirect("/");
       });
     } else if (path.extname(req.file.filename) === ".sig") {
-      var sig = fs.readFileSync(appRoot + "/src/public/files/" + req.file.filename, "utf-8");
-      signature.sign = sig;
-      return res.redirect("/");
+      fs.readFile(appRoot + "/src/public/files/" + req.file.filename, "utf-8", (err, data) => {
+        signature.sign = data;
+        res.redirect("/");
+      });
     } else if (path.extname(req.file.filename) === ".key") {
-      var key = fs.readFileSync(appRoot + "/src/public/files/" + req.file.filename, "utf-8");
-      signature.key = key;
-      return res.redirect("/");
+      fs.readFile(appRoot + "/src/public/files/" + req.file.filename, "utf-8", (err, data) => {
+        signature.key = data;
+        res.redirect("/");
+      });
     }
   } catch (error) {
     console.log(error);
