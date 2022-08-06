@@ -1,8 +1,8 @@
 import express from "express";
-import appController from "../controller/appController";
+import * as appController from "../controller/appController.js";
 import multer from "multer";
 import path from "path";
-var appRoot = require("app-root-path");
+import appRoot from 'app-root-path';
 
 let router = express.Router();
 const storage = multer.diskStorage({
@@ -18,15 +18,12 @@ const storage = multer.diskStorage({
 });
 let upload = multer({ storage: storage });
 
-const initWebRoute = (app) => {
-  // post
-  router.post("/generateKey", appController.generateKey);
-  router.post("/signText", appController.signText);
-  router.post("/verifyText", appController.verifyText);
-  router.post("/readingFile", upload.single("file_sign"), appController.readingFile);
-  // get
-  router.get("/reset", appController.reset);
-  router.get("/", appController.getHomePage);
-  return app.use("/", router);
-};
-export default initWebRoute;
+// post
+router.post("/generateKey", appController.generateKey);
+router.post("/signText", appController.signText);
+router.post("/verifyText", appController.verifyText);
+router.post("/readingFile", upload.single("file_sign"), appController.readingFile);
+// get
+router.get("/reset", appController.reset);
+router.get("/", appController.getHomePage);
+export default router;

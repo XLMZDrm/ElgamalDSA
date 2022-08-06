@@ -1,10 +1,10 @@
 import { BigInteger as BigInt } from "jsbn";
-import DecryptedValue from "./decrypted-value";
-import EncryptedValue from "./encrypted-value";
-import * as Errors from "./errors";
-import * as Utils from "./utils";
-var base64 = require('base-64');
-var utf8 = require('utf8');
+import DecryptedValue from "./decrypted-value.js";
+import EncryptedValue from "./encrypted-value.js";
+import * as Errors from "./errors.js";
+import * as Utils from "./utils.js";
+import base64 from 'base-64';
+import utf8 from 'utf8';
 /**
  * Provides methods for the ElGamal cryptosystem.
  */

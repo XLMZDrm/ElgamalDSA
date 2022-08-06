@@ -1,21 +1,16 @@
 {
-  "name": "ElgamalWebApp",
+  "name": "ElgamalDSA",
   "version": "1.0.0",
   "main": "./src/app.js",
-  "repository": "https://github.com/dimpDEV/ElgamalWebApp.git",
+  "repository": "https://github.com/drmerveem/ElgamalDSA.git",
   "author": "dimpDEV",
   "license": "MIT",
+  "type": "module",
   "scripts": {
-    "start": "nodemon --exec ./node_modules/.bin/babel-node ./src/app.js"
+    "start": "node ./src/app.js"
   },
   "dependencies": {
-    "@babel/cli": "^7.17.10",
-    "@babel/core": "^7.18.2",
-    "@babel/node": "^7.17.10",
-    "@babel/preset-env": "^7.18.2",
-    "@babel/runtime": "^7.18.3",
     "app-root-path": "^3.0.0",
-    "babel-runtime": "^6.26.0",
     "base-64": "^1.0.0",
     "bluebird": "^3.7.2",
     "ejs": "^3.1.8",

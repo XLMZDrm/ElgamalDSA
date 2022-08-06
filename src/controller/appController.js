@@ -1,10 +1,10 @@
-import ElGamal from "../models/index";
+import ElGamal from "../models/index.js";
 import fse from "fs-extra";
 import path from "path";
-const crypto = require('crypto');
-const fs = require("fs");
-var appRoot = require("app-root-path");
-const WordExtractor = require("word-extractor");
+import crypto from 'crypto';
+import fs from 'fs';
+import appRoot from 'app-root-path';
+import WordExtractor from "word-extractor";
 // send
 var mess = "WELCOME";
 var message = { mess: mess };
@@ -121,7 +121,7 @@ let readingFile = async (req, res) => {
     return res.redirect("/");
   }
 };
-export default {
+export {
   getHomePage,
   clearCache,
   generateKey,
