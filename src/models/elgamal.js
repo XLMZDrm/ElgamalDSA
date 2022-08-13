@@ -74,7 +74,7 @@ export default class ElGamal {
    * @param {string} key Base64 key.
    * @returns 
    */
-  static async getElgamalBase64(key) {
+  static getElgamalBase64(key) {
     var bytes = base64.decode(key);
     key = utf8.decode(bytes);
     key = JSON.parse(key);
