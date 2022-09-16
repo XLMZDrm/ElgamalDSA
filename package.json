@@ -2,7 +2,7 @@
   "name": "ElgamalDSA",
   "version": "1.0.0",
   "main": "./src/app.js",
-  "repository": "https://github.com/drmerveem/ElgamalDSA.git",
+  "repository": "https://github.com/KGBdrm/ElgamalDSA.git",
   "author": "dimpDEV",
   "license": "MIT",
   "type": "module",
